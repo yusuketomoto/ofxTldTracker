@@ -115,8 +115,3 @@ bool MFTracker::filterPointsByNcc(Points &points1, Points &points2, std::vector<
     else
         return false;
 }
-
-bool MFTracker::trackf2f(const cv::Mat &img1, const cv::Mat &img2, Points &points1, Points &points2)
-{
-    return track(img1, img2, points1, points2);
-}

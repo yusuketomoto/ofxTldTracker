@@ -186,11 +186,11 @@ bool TLD::tracking(cv::Mat const& img1, cv::Mat const& img2, Points &points1, Po
     }
     std::vector<cv::Point2f> points = points1;
     //Frame-to-frame tracking with forward-backward error cheking
-    tracked = tracker.trackf2f(img1,img2,points,points2);
+    tracked = tracker.track(img1,img2,points,points2);
     if (tracked){
         //Bounding box prediction
         bbPredict(points,points2,lastbox,tBB);
-        if (tracker.getFB()>10 || tBB.x>img2.cols ||  tBB.y>img2.rows || tBB.br().x < 1 || tBB.br().y <1){
+        if (tracker.getMedianFbError()>10 || tBB.x>img2.cols ||  tBB.y>img2.rows || tBB.br().x < 1 || tBB.br().y <1){
             tValid =false; //too unstable prediction or bounding box out of image
             tracked = false;
             return tracked;

@@ -21,9 +21,6 @@ public:
     MFTracker();
     bool track(cv::Mat const& img1, cv::Mat const& img2, Points& points1, Points& points2);
     float getMedianFbError() const { return median_fb_error; }
-
-    bool trackf2f(cv::Mat const& img1, cv::Mat const& img2, Points& points1, Points& points2);
-    float getFB() const { return median_fb_error; }
     
 private:
     void normCrossCorrelation(cv::Mat const& img1, cv::Mat const& img2,
