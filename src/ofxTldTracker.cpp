@@ -16,15 +16,14 @@ void ofxTldTracker::setup()
     fs.open(filename, cv::FileStorage::READ);
     
     if (!fs.isOpened()) {
-        std::cerr << "Couldn't read parameters file." << std::endl;
-        std::cerr << "Please put it in your data folder." << std::endl;
-        exitApp();
+        ofLogError() << "Couldn't read parameters file.";
+        ofExit();
     }
     
     tld.readParams(fs.getFirstTopLevelNode());    
 }
 
-void ofxTldTracker::update(cv::Mat const& image)
+void ofxTldTracker::update(cv::Mat& image)
 {
     switch (tld_state) {
         case TLD_STATE_GETBOUNDINGBOX:
@@ -91,8 +90,6 @@ void ofxTldTracker::draw()
         case TLD_STATE_REPEAT:
             if (isDetect()) {
                 ofRect(predicted_box.x, predicted_box.y, predicted_box.width, predicted_box.height);
-                drawPoints(points1);
-                drawPoints(points2, cv::Scalar(0, 255, 0));
             }
             break;
     }
@@ -137,6 +134,8 @@ void ofxTldTracker::mousePressed(int x, int y)
 void ofxTldTracker::mouseReleased(int x, int y)
 {
     is_drawing_box = false;
+    if (bounding_box.width == 0 || bounding_box.height == 0) return;
+    
     if( bounding_box.width < 0 ){
         bounding_box.x += bounding_box.width;
         bounding_box.width *= -1;

@@ -9,7 +9,12 @@ class ofxTldTracker
 public:
     ofxTldTracker();
     void setup();
-    void update(cv::Mat const& image);
+    template <typename T>
+    void update(T& image) {
+        cv::Mat frame_mat  = ofxCv::toCv(image);
+        update(frame_mat);
+    }
+    void update(cv::Mat& image);
     void reset();
     void draw();
     
