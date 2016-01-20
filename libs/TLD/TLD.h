@@ -1,6 +1,7 @@
 #pragma once
 
 #include <opencv2/opencv.hpp>
+#include <opencv2/legacy/legacy.hpp>
 #include <vector>
 #include "MFTracker.h"
 #include "Ferns.h"
